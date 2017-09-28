@@ -14,15 +14,31 @@
 
 <div class="container">
     <!-- Page Content goes here -->
-    <div class="row">
-        <div class="col s12">
-            <h1>Curso de Vue.js</h1>
-        </div>
-    </div>
 
     <div id="app">
-        Hello : {{ message }}
-        {{ dinamicName }}
+        <div class="row">
+            <div class="col s12" v-once>
+                <h1>Curso de Vue.js</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 card" v-text="message">
+                Hello : {{ message }}
+                {{ dinamicName }}
+            </div>
+
+            <div class="col s12 card" v-text="name">
+            </div>
+
+            <div class="col s12 card" v-text="nameHTML">
+            </div>
+
+
+            <div class="col s12 card" v-html="nameHTML">
+            </div>
+        </div>
+
     </div>
 
 </div>
@@ -36,7 +52,11 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Guillermo '
+            message: 'Hello Vue!',
+            project : 'Aprendiendo Vue.js',
+            nameHTML : '<h5>Guillermo with h5</h5>',
+            name: 'Guillermo'
+
         },
         computed: {
             dinamicName : function () {
