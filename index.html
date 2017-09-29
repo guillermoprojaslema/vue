@@ -70,6 +70,31 @@
                         </form>
                     </template>
 
+                    <!-- v-for tambien soporta <alias> of <array>-->
+                    <ul>
+
+                        <!--<h2>Todas las tareas</h2>
+                        <li v-for="task in tasks">
+                            {{task}}
+                        </li>-->
+
+                        <h2>Todas las tareas</h2>
+                        <li v-for="(task, index) of tasks">
+                            <div v-if="task.pending">
+                                <del>{{task.title}}</del>
+                            </div>
+                            <div v-else>
+                                {{task.title}}
+                            </div>
+
+                        </li>
+
+                        <h2>Todas las pendientes</h2>
+                        <li v-for="task of pendingTasks">
+                            {{task.title}}
+                        </li>
+                    </ul>
+
 
                 </div>
             </form>
@@ -94,7 +119,31 @@
                 exp: null,
                 years: 0,
                 description: ''
-            }
+            },
+
+            tasks: [
+                {
+                    title: 'Ducharme',
+                    pending: true
+                },
+                {
+                    title: 'Laravarme los dientes',
+                    pending: false
+                },
+                {
+                    title: 'Trabajar',
+                    pending: true
+                },
+                {
+                    title: 'Jugar PS4',
+                    pending: false
+                },
+                {
+                    title: 'Dormir',
+                    pending: true
+                }
+            ]
+
 
         },
         computed: {
@@ -110,8 +159,14 @@
                     return 'El texto es mayor a 20 caracteres'
                 }
             },
-            descriptionFieldClasses : function () {
-              return  ['form-group', {'has-error': this.descriptionError}]
+            descriptionFieldClasses: function () {
+                return ['form-group', {'has-error': this.descriptionError}]
+            },
+
+            pendingTasks: function () {
+                return this.tasks.filter(function (item) {
+                    return item.pending; // retorna los item en los cuales pending sea true
+                })
             }
 
         }
