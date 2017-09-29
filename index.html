@@ -29,10 +29,6 @@
 
 
                     {{ $data }}
-                    <div class="input-field col s12">
-                        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-                        <label for="first_name">First Name</label>
-                    </div>
 
                     <h4>¿Has trabajado con Vue.js?</h4>
                     <p>
@@ -52,22 +48,23 @@
                                 <label for="years">¿Cuántos años de experiencia tienes?</label>
                             </div>
                         </div>
+
+
+                        <div class="row" v-if="vue.years >= 2">
+                            <div class="input-field col s12">
+                                <input id="description" type="text" v-model="vue.description" class="validate">
+                                <label for="description">Cuéntanos tu experiencia</label>
+                            </div>
+                        </div>
+
+
+                        <div class="row" v-else>
+                            <div class="input-field col s12">
+                                <input id="motivation" type="text" v-model="vue.motivation" class="validate">
+                                <label for="motivation">¿Qué te motivó a aprender?</label>
+                            </div>
+                        </div>
                     </template>
-
-                    <div class="row" v-if="vue.years >= 2">
-                        <div class="input-field col s12">
-                            <input id="description" type="text" v-model="vue.description" class="validate">
-                            <label for="description">Cuéntanos tu experiencia</label>
-                        </div>
-                    </div>
-
-
-                    <div class="row" v-else>
-                        <div class="input-field col s12">
-                            <input id="motivation" type="text" v-model="vue.motivation" class="validate">
-                            <label for="motivation">¿Qué te motivó a aprender?</label>
-                        </div>
-                    </div>
 
 
                 </div>
