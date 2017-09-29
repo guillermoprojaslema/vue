@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
     <link rel="stylesheet" href="css/bootstrap.css">
-
-    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
@@ -58,8 +53,8 @@
                                        placeholder="Años de experiencia">
                             </div>
 
-                            <div v-if="vue.years < 2" class="form-group">
-                                <label for="description">¿Qué te motivó a aprender?</label>
+                            <div v-if="vue.years < 2" v-bind:class="descriptionFieldClasses">
+                                <label class="control-label" for="description">¿Qué te motivó a aprender?</label>
                                 <input v-model="vue.description" type="text" class="form-control" id="description"
                                        placeholder="Explica tu motivación">
                                 <p v-if="descriptionError != '' ">{{ descriptionError }}</p>
@@ -114,6 +109,9 @@
                 if (val.length > 20) {
                     return 'El texto es mayor a 20 caracteres'
                 }
+            },
+            descriptionFieldClasses : function () {
+              return  ['form-group', {'has-error': this.descriptionError}]
             }
 
         }
