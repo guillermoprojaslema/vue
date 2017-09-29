@@ -4,7 +4,7 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,57 +17,62 @@
 
     <div id="app">
         <div class="row">
-            <div class="col s12" v-once>
+            <div class="col-md-12" v-once>
                 <h1>Curso de Vue.js</h1>
             </div>
         </div>
 
 
         <div class="row">
-            <form class="col s12">
+            <form class="col-md-12">
                 <div class="row">
 
 
                     {{ $data }}
 
                     <h4>¿Has trabajado con Vue.js?</h4>
-                    <p>
-                        <input name="group1" type="radio" id="test1" v-model="vue.exp" v-bind:value="true"/>
-                        <label for="test1">Sí</label>
-                    </p>
-                    <p>
-                        <input name="group1" type="radio" id="test2" v-model="vue.exp" v-bind:value="false"/>
-                        <label for="test2">No</label>
-                    </p>
+
+                    <div class="radio">
+                        <label>
+                            <input v-model="vue.exp" type="radio" name="optionsRadios" id="optionsRadios1"
+                                   v-bind:value=true
+                                   checked>
+                            Sí
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input v-model="vue.exp" type="radio" name="optionsRadios" id="optionsRadios2"
+                                   v-bind:value=false>
+                            No
+                        </label>
+                    </div>
+
 
                     <!--Si la respuesta es sí -->
                     <template v-if="vue.exp">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="years" type="number" v-model="vue.years" class="validate">
-                                <label for="years">¿Cuántos años de experiencia tienes?</label>
-                            </div>
-                        </div>
-
-
-                        <div class="row" v-if="vue.years < 2">
-                            <div class="input-field col s12">
-                                <input id="description" type="text" v-model="vue.motivation" class="validate">
-                                <label for="motivation">¿Qué te motivó a aprender?</label>
+                        <form>
+                            <div class="form-group">
+                                <label for="years">Años de experiencia</label>
+                                <input v-model="vue.years" type="number" class="form-control" id="years"
+                                       placeholder="Años de experiencia">
                             </div>
 
-                            <p v-show="vue.motivation.length >= 50"> El texto es muy largo </p>
-                            <p v-show="vue.motivation.length < 5"> El texto es muy corto </p>
-                        </div>
+                            <div v-if="vue.years < 2" class="form-group">
+                                <label for="description">¿Qué te motivó a aprender?</label>
+                                <input v-model="vue.description" type="text" class="form-control" id="description"
+                                       placeholder="Explica tu motivación">
+                                <p v-if="descriptionError != '' ">{{ descriptionError }}</p>
+                            </div>
 
-
-
-                        <div class="row" v-else-if="vue.years >= 2">
-                            <div class="input-field col s12">
-                                <input id="motivation" type="text" v-model="vue.description" class="validate">
+                            <div v-else-if="vue.years >= 2" class="form-group">
                                 <label for="description">Cuéntanos tu experiencia</label>
+                                <input v-model="vue.description" type="text" class="form-control" id="motivation"
+                                       placeholder="Describe tu experiencia">
                             </div>
-                        </div>
+
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
                     </template>
 
 
@@ -79,9 +84,10 @@
 
 </div>
 
+
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="js/materialize.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="https://unpkg.com/vue"></script>
 
 <script>
@@ -90,10 +96,24 @@
         data: {
             message: 'Hello Vue!',
             vue: {
-                exp: 'null',
+                exp: null,
                 years: 0,
-                description: '',
-                motivation: ''
+                description: ''
+            }
+
+        },
+        computed: {
+            descriptionError: function () {
+                var val = this.vue.description.trim();
+                if (val == '') {
+                    return 'Es Obligatorio'
+                }
+                if (val.length < 5) {
+                    return 'El texto es menor a 5 caracteres'
+                }
+                if (val.length > 20) {
+                    return 'El texto es mayor a 20 caracteres'
+                }
             }
 
         }
@@ -101,30 +121,5 @@
 </script>
 </body>
 
-<footer class="page-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
-    </div>
-</footer>
 
 </html>
